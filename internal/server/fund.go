@@ -8,7 +8,7 @@ import (
 
 type FundServer struct {
 	commands chan interface{}
-	fund     model.Fund
+	fund     *model.Fund
 }
 
 type WithdrawCommand struct {
@@ -22,7 +22,7 @@ type BalanceCommand struct {
 func NewFundServer(initialBalance int) *FundServer {
 	server := &FundServer{
 		commands: make(chan interface{}),
-		fund:     *model.NewFund(initialBalance),
+		fund:     model.NewFund(initialBalance),
 	}
 	go server.loop()
 	return server
