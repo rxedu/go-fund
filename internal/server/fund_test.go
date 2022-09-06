@@ -3,6 +3,8 @@ package server
 import (
 	"sync"
 	"testing"
+
+	"github.com/rxedu/go-fund/internal/model"
 )
 
 const WORKERS = 10
@@ -18,21 +20,31 @@ func BenchmarkWithdrawls(b *testing.B) {
 
 	var wg sync.WaitGroup
 
+	pizzaTime := false
 	for i := 0; i < WORKERS; i++ {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
 			for i := 0; i < amountPerTx; i++ {
-				server.Withdraw(1)
+				server.Transact(func(fund *model.Fund) {
+					if fund.Balance() <= 10 {
+						pizzaTime = true
+						return
+					}
+					fund.Withdraw(1)
+				})
 			}
 		}()
+		if pizzaTime {
+			break
+		}
 	}
 
 	wg.Wait()
 
 	balance := server.Balance()
 
-	if balance != 0 {
-		b.Error("Expected Balance to be 0, got", balance)
+	if balance != 10 {
+		b.Error("Expected Balance to be 10, got", balance)
 	}
 }

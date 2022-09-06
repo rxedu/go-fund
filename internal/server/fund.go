@@ -11,6 +11,13 @@ type FundServer struct {
 	fund     *model.Fund
 }
 
+type Transactor func(fund *model.Fund)
+
+type TransactionCommand struct {
+	Transactor Transactor
+	Done       chan bool
+}
+
 type WithdrawCommand struct {
 	Amount int
 }
@@ -26,6 +33,15 @@ func NewFundServer(initialBalance int) *FundServer {
 	}
 	go server.loop()
 	return server
+}
+
+func (s FundServer) Transact(transactor Transactor) {
+	command := TransactionCommand{
+		Transactor: transactor,
+		Done:       make(chan bool),
+	}
+	s.commands <- command
+	<-command.Done
 }
 
 func (s FundServer) Balance() int {
@@ -46,6 +62,9 @@ func (s FundServer) loop() {
 		case BalanceCommand:
 			balance := s.fund.Balance()
 			cmd.Response <- balance
+		case TransactionCommand:
+			cmd.Transactor(s.fund)
+			cmd.Done <- true
 		default:
 			panic(fmt.Sprintf("Unrecognized command: %v", command))
 		}
