@@ -9,7 +9,7 @@ signs:
   - artifacts: checksum
 
 builds:
-  - binary: gomodule
-    main: cmd/gomodule/main.go
+  - binary: gofund
+    main: cmd/gofund/main.go
     env:
       - CGO_ENABLED=0

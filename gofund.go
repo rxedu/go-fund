@@ -1,9 +1,9 @@
-package gomodule
+package gofund
 
 import (
 	"fmt"
 
-	"github.com/makenew/gomodule/internal/todo"
+	"github.com/rxedu/go-fund/internal/todo"
 )
 
 func PrintMessage() {

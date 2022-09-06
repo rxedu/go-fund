@@ -1,94 +1,17 @@
-# Go Module Project Skeleton
+# Go Fund
 
-[![GitHub Actions](https://github.com/makenew/gomodule/workflows/main/badge.svg)](https://github.com/makenew/gomodule/actions)
-
-Project skeleton for a Go module.
+[![GitHub Actions](https://github.com/rxedu/go-fund/workflows/main/badge.svg)](https://github.com/rxedu/go-fund/actions)
 
 ## Description
 
-Bootstrap a new Go module in five minutes or less.
-
-### Features
-
-- Multi-arch and multi-platform builds published to GitHub with [GoReleaser].
-- Linting with [golangci-lint].
-- Continuous testing and deployment with [GitHub Actions].
-- [Keep a CHANGELOG].
-- Consistent coding with [EditorConfig].
-
-[EditorConfig]: https://editorconfig.org/
-[GitHub Actions]: https://github.com/features/actions
-[GitHub Container Registry]: https://github.com/features/packages
-[golangci-lint]: https://golangci-lint.run/
-[GoReleaser]: https://goreleaser.com/
-[Keep a CHANGELOG]: https://keepachangelog.com/
-
-### Bootstrapping a new project
-
-1. Create an empty (**non-initialized**) repository on GitHub.
-2. Clone the master branch of this repository with
-   ```
-   $ git clone --single-branch git@github.com:makenew/gomodule.git <new-go-module>
-   $ cd <new-go-module>
-   ```
-   Optionally, reset to the latest version with
-   ```
-   $ git reset --hard <version-tag>
-   ```
-3. Run
-   ```
-   $ ./makenew.sh
-   ```
-   This will replace the boilerplate, delete itself,
-   remove the git remote, remove upstream tags,
-   and stage changes for commit.
-4. Create the required GitHub repository secrets.
-5. Review, commit, and push the changes to GitHub with
-   ```
-   $ git diff --cached
-   $ git commit -m "Replace makenew boilerplate"
-    git remote add origin git@github.com:<user>/<new-go-module>.git
-   $ git push -u origin master
-   ```
-6. Ensure the GitHub action passes,
-   then release the initial version with
-   ```
-   $ git tag --sign v0.0.1
-   $ git push --tags
-   ```
-
-### Updating from this skeleton
-
-If you want to pull in future updates from this skeleton,
-you can fetch and merge in changes from this repository.
-
-Add this as a new remote with
-
-```
-$ git remote add upstream git@github.com:makenew/gomodule.git
-```
-
-You can then fetch and merge changes with
-
-```
-$ git fetch --no-tags upstream
-$ git merge upstream/master
-```
-
-#### Changelog for this skeleton
-
-Note that `CHANGELOG.md` is just a template for this skeleton.
-The actual changes for this project are documented in the commit history
-and summarized under [Releases].
-
-[Releases]: https://github.com/makenew/gomodule/releases
+[Go Programming Language: An Introductory Golang Tutorial by Brendon Hogger](https://www.toptal.com/go/go-programming-a-step-by-step-introductory-tutorial)
 
 ## Installation
 
 Simply import this module into your project
 
 ```go
-import "github.com/makenew/gomodule"
+import "github.com/rxedu/go-fund"
 ```
 
 Then run
@@ -102,8 +25,8 @@ $ go mod tidy
 ### Quickstart
 
 ```
-$ git clone https://github.com/makenew/gomodule.git
-$ cd gomodule
+$ git clone https://github.com/rxedu/go-fund.git
+$ cd go-fund
 $ make
 $ make test
 ```
@@ -114,10 +37,10 @@ The [source code] is hosted on GitHub.
 Clone the project with
 
 ```
-$ git clone git@github.com:makenew/gomodule.git
+$ git clone git@github.com:rxedu/go-fund.git
 ```
 
-[source code]: https://github.com/makenew/gomodule
+[source code]: https://github.com/rxedu/go-fund
 
 ### Requirements
 
@@ -162,7 +85,7 @@ Please submit and comment on bug reports and feature requests.
 
 To submit a patch:
 
-1. Fork it (https://github.com/makenew/gomodule/fork).
+1. Fork it (https://github.com/rxedu/go-fund/fork).
 2. Create your feature branch (`git checkout -b my-new-feature`).
 3. Make changes.
 4. Commit your changes (`git commit -am 'Add some feature'`).
