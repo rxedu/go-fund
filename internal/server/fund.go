@@ -30,14 +30,12 @@ func NewFundServer(initialBalance int) *FundServer {
 
 func (s FundServer) loop() {
 	for command := range s.Commands {
-		switch command.(type) {
+		switch cmd := command.(type) {
 		case WithdrawCommand:
-			withdrawl := command.(WithdrawCommand)
-			s.fund.Withdraw(withdrawl.Amount)
+			s.fund.Withdraw(cmd.Amount)
 		case BalanceCommand:
-			balanceReq := command.(BalanceCommand)
 			balance := s.fund.Balance()
-			balanceReq.Response <- balance
+			cmd.Response <- balance
 		default:
 			panic(fmt.Sprintf("Unrecognized command: %v", command))
 		}
