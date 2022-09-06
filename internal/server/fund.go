@@ -7,7 +7,7 @@ import (
 )
 
 type FundServer struct {
-	Commands chan interface{}
+	commands chan interface{}
 	fund     model.Fund
 }
 
@@ -21,15 +21,25 @@ type BalanceCommand struct {
 
 func NewFundServer(initialBalance int) *FundServer {
 	server := &FundServer{
-		Commands: make(chan interface{}),
+		commands: make(chan interface{}),
 		fund:     *model.NewFund(initialBalance),
 	}
 	go server.loop()
 	return server
 }
 
+func (s FundServer) Balance() int {
+	res := make(chan int)
+	s.commands <- BalanceCommand{Response: res}
+	return <-res
+}
+
+func (s FundServer) Withdraw(amount int) {
+	s.commands <- WithdrawCommand{Amount: amount}
+}
+
 func (s FundServer) loop() {
-	for command := range s.Commands {
+	for command := range s.commands {
 		switch cmd := command.(type) {
 		case WithdrawCommand:
 			s.fund.Withdraw(cmd.Amount)

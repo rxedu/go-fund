@@ -23,16 +23,14 @@ func BenchmarkWithdrawls(b *testing.B) {
 		go func() {
 			defer wg.Done()
 			for i := 0; i < amountPerTx; i++ {
-				server.Commands <- WithdrawCommand{Amount: 1}
+				server.Withdraw(1)
 			}
 		}()
 	}
 
 	wg.Wait()
 
-	balanceResChannel := make(chan int)
-	server.Commands <- BalanceCommand{Response: balanceResChannel}
-	balance := <-balanceResChannel
+	balance := server.Balance()
 
 	if balance != 0 {
 		b.Error("Expected Balance to be 0, got", balance)
