@@ -1,18 +1,37 @@
 package model
 
 import (
+	"sync"
 	"testing"
 )
 
-func BenchmarkFund(b *testing.B) {
-	fund := NewFund(b.N)
+const WORKERS = 10
 
-	for i := 0; i < b.N; i++ {
-		fund.Withdraw(1)
+func BenchmarkFund(b *testing.B) {
+	if b.N < WORKERS {
+		return
 	}
 
+	fund := NewFund(b.N)
+
+	amountPerTx := b.N / WORKERS
+
+	var wg sync.WaitGroup
+
+	for i := 0; i < WORKERS; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			for i := 0; i < amountPerTx; i++ {
+				fund.Withdraw(1)
+			}
+		}()
+	}
+
+	wg.Wait()
+
 	if fund.Balance() != 0 {
-		b.Error("Expected Balance to be 0")
+		b.Error("Expected Balance to be 0, got", fund.Balance())
 	}
 }
 
